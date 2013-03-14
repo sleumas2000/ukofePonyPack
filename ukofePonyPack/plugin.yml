@@ -1,0 +1,14 @@
+name: ukofePonyPack
+main: com.gmail.ripppony.ukofePonyPack.ukofePonyPack
+version: 0.3.0.0
+
+# 0.2.2.0 - Working on Rockvision - Initial testing
+#      .1 - Added code to clear Rockvision charge on cancel
+#
+# 0.3.0.0 - Added Pegasus Powers, Fixed Rock vision
+#      .1 - Added Check to try and solve issues when switching gamemodes [DOSEN'T WORK]
+#         - Added Check to prevent massive hunger drain when teleporting [DOSEN'T WORK]
+# 0.3.0.2 - I was missing @EventHandlers.... I know 
+#         - Fixed teleporting but not gamemodes Theroy, the allowFlight is cleared after resetting it.
+# 0.3.0.3 - Cleared flight allowance on leaving game
+#         - Toggled some numbers
