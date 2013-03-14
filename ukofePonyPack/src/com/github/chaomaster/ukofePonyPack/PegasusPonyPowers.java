@@ -64,17 +64,20 @@ public class PegasusPonyPowers extends PonyPowers {
 		if (config.isDouble("ExaustionPerSecond")) {
 			this.EXHAUSTION_PER_SECOND = config.getDouble("ExaustionPerSecond");
 		}
-		if (config.isInt("FoodNeededToFly"))
+		if (config.isInt("FoodNeededToFly")) {
 			this.FOOD_NEEDED_TO_FLY = config.getInt("FoodNeededToFly");
+		}
 	}
 
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
-		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.PEGASUS)
-			if (event.getPlayer().getFoodLevel() < this.FOOD_NEEDED_TO_FLY)
+		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.PEGASUS) {
+			if (event.getPlayer().getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
 				event.getPlayer().setAllowFlight(false);
-			else
+			} else {
 				event.getPlayer().setAllowFlight(true);
+			}
+		}
 	}
 
 	@EventHandler
@@ -91,44 +94,51 @@ public class PegasusPonyPowers extends PonyPowers {
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
 		if ((event.getEntity() instanceof Player)) {
 			Player target = (Player) event.getEntity();
-			if (this.plugin.checker.getType(target) == PonyType.PEGASUS)
-				if (event.getFoodLevel() < this.FOOD_NEEDED_TO_FLY)
+			if (this.plugin.checker.getType(target) == PonyType.PEGASUS) {
+				if (event.getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
 					target.setAllowFlight(false);
-				else
+				} else {
 					target.setAllowFlight(true);
+				}
+			}
 		}
 	}
 
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
 		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.PEGASUS)
-			if (event.isFlying())
+			if (event.isFlying()) {
 				this.lastFlightPos.put(event.getPlayer(), event.getPlayer()
 						.getLocation());
-			else if (this.lastFlightPos.containsKey(event.getPlayer()))
+			} else if (this.lastFlightPos.containsKey(event.getPlayer())) {
 				this.lastFlightPos.remove(event.getPlayer());
+			}
 	}
 
 	@EventHandler
 	public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event) {
 		if (event.getNewGameMode() == GameMode.CREATIVE) {
-			if (this.lastFlightPos.containsKey(event.getPlayer()))
+			if (this.lastFlightPos.containsKey(event.getPlayer())) {
 				this.lastFlightPos.remove(event.getPlayer());
-		} else
+			}
+		} else {
 			this.plugin.checker.getType(event.getPlayer());
+		}
 	}
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		if (this.lastFlightPos.containsKey(event.getPlayer()))
+		if (this.lastFlightPos.containsKey(event.getPlayer())) {
 			this.lastFlightPos.put(event.getPlayer(), event.getTo());
+		}
 	}
 
 	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if (((event.getEntity() instanceof Player))
 				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.PEGASUS)
-				&& (event.getCause() == EntityDamageEvent.DamageCause.FALL))
+				&& (event.getCause() == EntityDamageEvent.DamageCause.FALL)) {
 			event.setDamage(0);
+		}
 	}
 }

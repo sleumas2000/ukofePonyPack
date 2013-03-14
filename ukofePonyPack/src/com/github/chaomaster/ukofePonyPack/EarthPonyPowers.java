@@ -56,8 +56,9 @@ public class EarthPonyPowers extends PonyPowers {
 		if (config.isInt("potatoBonus")) {
 			this.POTATO_BONUS = config.getInt("potatoBonus");
 		}
-		if (config.isInt("carrotBonus"))
+		if (config.isInt("carrotBonus")) {
 			this.CARROT_BONUS = config.getInt("carrotBonus");
+		}
 	}
 
 	@EventHandler
@@ -68,15 +69,17 @@ public class EarthPonyPowers extends PonyPowers {
 		}
 
 		if (((event.getDamager() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getDamager()) == PonyType.EARTH))
+				&& (this.plugin.checker.getType((Player) event.getDamager()) == PonyType.EARTH)) {
 			dealingDamage(event);
+		}
 	}
 
 	@EventHandler
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
 		if (((event.getEntity() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.EARTH))
+				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.EARTH)) {
 			gettingHungry(event);
+		}
 	}
 
 	@EventHandler
@@ -109,9 +112,10 @@ public class EarthPonyPowers extends PonyPowers {
 				}
 				break;
 			case 142:
-				if (block.getData() == 7)
+				if (block.getData() == 7) {
 					harvestingCrops(event, new ItemStack(Material.CARROT_ITEM,
 							this.CARROT_BONUS));
+				}
 				break;
 			}
 		}
@@ -130,10 +134,11 @@ public class EarthPonyPowers extends PonyPowers {
 	}
 
 	public void gettingHungry(FoodLevelChangeEvent event) {
-		if (event.getFoodLevel() < this.FOODBAR_MINIUM)
+		if (event.getFoodLevel() < this.FOODBAR_MINIUM) {
 			event.setFoodLevel(5);
-		else if (Math.random() < this.FOODBAR_PRESERVE_CHANCE)
+		} else if (Math.random() < this.FOODBAR_PRESERVE_CHANCE) {
 			event.setFoodLevel(event.getFoodLevel() + 1);
+		}
 	}
 
 	public void harvestingCrops(BlockBreakEvent event, ItemStack drops) {
