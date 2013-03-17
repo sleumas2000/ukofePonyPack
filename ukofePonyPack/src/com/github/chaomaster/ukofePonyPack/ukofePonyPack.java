@@ -94,9 +94,20 @@ public class ukofePonyPack extends JavaPlugin {
 			this.checker.saveToPlayerConfig(target.getName(),
 					new PlayerConfigInfo(toType, duration, forever));
 			this.checker.triggerExpire(target);
-			target.sendMessage(String.format("%s has now made you %s",
-					sender == null ? "The console" : sender.getName(),
-					this.checker.getType(target).getMessage()));
+			if (sender.equals(target)) {
+				target.sendMessage(String.format("%s has now made you %s",
+						sender == null ? "The console" : sender.getName(),
+						this.checker.getType(target).getMessage()));
+			} else {
+				target.sendMessage(String.format("%s has now made you %s",
+						sender == null ? "The console" : sender.getName(),
+						this.checker.getType(target).getMessage()));
+				sendMessage(sender, String.format("%s is now %s", target
+						.getName(), this.checker.getType(target).getMessage()));
+			}
+			if(toType != PonyType.PEGASUS){ //Temp flight problem fix
+				target.setAllowFlight(false);
+			}
 			return true;
 		}
 		// Ponycachereload
@@ -112,7 +123,7 @@ public class ukofePonyPack extends JavaPlugin {
 		}
 		// Ponycachesave
 		// Forces a save of the player cache
-		else if(cmd.getName().equalsIgnoreCase("ponycachesave")){
+		else if (cmd.getName().equalsIgnoreCase("ponycachesave")) {
 			if (sender != null && !sender.hasPermission(cmd.getPermission())) {
 				sendMessage(sender,
 						"You don't have permission to use this command");

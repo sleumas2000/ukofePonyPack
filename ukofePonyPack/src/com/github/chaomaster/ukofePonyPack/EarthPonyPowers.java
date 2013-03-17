@@ -31,18 +31,18 @@ public class EarthPonyPowers extends PonyPowers {
 				"EarthConfig.yml");
 		YamlConfiguration config = YamlConfiguration
 				.loadConfiguration(configFile);
-		if (config.isDouble("DamageMultiplier")) {
-			this.DAMAGE_MULTIPLIER = config.getDouble("DamageMultiplier");
+		if (config.isDouble("damageMultiplier")) {
+			this.DAMAGE_MULTIPLIER = config.getDouble("damageMultiplier");
 		}
-		if (config.isDouble("ResistanceDivisor")) {
-			this.RESISTANCE_DIVISOR = config.getDouble("ResistanceDivisor");
+		if (config.isDouble("resistanceDivisor")) {
+			this.RESISTANCE_DIVISOR = config.getDouble("resistanceDivisor");
 		}
-		if (config.isInt("FoodbarMinium")) {
-			this.FOODBAR_MINIUM = config.getInt("FoodbarMinium");
+		if (config.isInt("foodbarMinium")) {
+			this.FOODBAR_MINIUM = config.getInt("foodbarMinium");
 		}
-		if (config.isDouble("FoodbarPreserveChance")) {
+		if (config.isDouble("foodbarPreserveChance")) {
 			this.FOODBAR_PRESERVE_CHANCE = config
-					.getDouble("FoodbarPreserveChance");
+					.getDouble("foodbarPreserveChance");
 		}
 		if (config.isInt("wheatBonus")) {
 			this.WHEAT_BONUS = config.getInt("wheatBonus");

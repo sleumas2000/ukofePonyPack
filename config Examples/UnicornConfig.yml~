@@ -1,0 +1,42 @@
+TeleportConfig:
+  ChargeTicks: 100
+  HungerCost: 8
+  Deviation: 20
+  GroupRange: 3
+  GroupDeviation: 3
+RockVisionConfig:
+  Wood:
+    ChargeTicks: 120
+    HungerCost: 6
+    VisionDistance: 2
+    DurationTicks: 300
+    Disabled: false
+    ReplaceList: "1,14,15,21,56,73,74"
+  Stone: false
+    ChargeTicks: 100
+    HungerCost: 6
+    VisionDistance: 3
+    DurationTicks: 500
+    Disabled:
+    ReplaceList: "1,3,14,56,73,74"
+  Iron:
+    ChargeTicks: 80
+    HungerCost: 6
+    VisionDistance: 4
+    DurationTicks: 600
+    Disabled: false
+    ReplaceList: "1,3"
+  Gold:
+    ChargeTicks: 40
+    HungerCost: 6
+    VisionDistance: 6
+    DurationTicks: 100 
+    Disabled: false
+    ReplaceList: "1,3"
+  Diamond:
+    ChargeTicks: 50
+    HungerCost: 6
+    VisionDistance: 5
+    DurationTicks: 80
+    Disabled: false
+    ReplaceList: "1,3"
