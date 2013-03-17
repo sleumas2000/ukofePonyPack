@@ -4,9 +4,15 @@ version: 0.4.0
 description: Provides various pony powers based on the player's skin.
 author: chao-master.github
 commands:
-  info:
+  ponyinfo:
+    aliases: info
     usage: 'Usage: /<command> {player}'
-  recheck:
+    permission: ukofePonyPack.info
+  ponyrecheck:
+    aliases: recheck
     usage: 'Usage: /<command> {player}'
-  assign:
+    permission: ukofePonyPack.recheck
+  ponyassign:
+    aliases: assign
     usage: 'Usage: /<command> {player} [type] {duration}'
+    permission: ukofePonyPack.assign

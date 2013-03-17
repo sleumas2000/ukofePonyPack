@@ -31,8 +31,8 @@ public class ukofePonyPack extends JavaPlugin {
 		// Info <Player> / Recheck <Player>
 		// Return information on the player's skin and powers
 		// The recheck command forces the value to be recomputed.
-		if (cmd.getName().equalsIgnoreCase("info")
-				|| cmd.getName().equalsIgnoreCase("recheck")) {
+		if (cmd.getName().equalsIgnoreCase("ponyinfo")
+				|| cmd.getName().equalsIgnoreCase("ponyrecheck")) {
 			Player target = null;
 			if (args.length == 0) {
 				if (sender == null) {
@@ -49,7 +49,7 @@ public class ukofePonyPack extends JavaPlugin {
 				return true;
 			}
 			if (!selfOtherPermCheck(sender, target, "ukofePonyPack."
-					+ cmd.getName().toLowerCase())) {
+					+ cmd.getName().replace("pony", "").toLowerCase())) {
 				return true;
 			}
 			if (cmd.getName().equalsIgnoreCase("recheck")) {
