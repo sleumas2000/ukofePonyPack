@@ -52,11 +52,11 @@ public class PlayerConfigInfo {
 
 	public String formatExpire() {
 		if (this.forever)
-			return "forever";
+			return "never expires";
 		if (!hasExpired()) {
 			SimpleDateFormat ef = new SimpleDateFormat("EEE d/M HH:mm");
-			return "until " + ef.format(this.expire);
+			return "expires on " + ef.format(this.expire);
 		}
-		return "until the past...";
+		return "has already expired";
 	}
 }

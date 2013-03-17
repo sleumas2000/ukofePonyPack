@@ -49,6 +49,23 @@ public class PonyChecker implements Listener {
 		return (PonyType) ((MetadataValue) player.getMetadata("ponyType")
 				.get(0)).value();
 	}
+	
+	public void triggerExpire(Player player){
+		if (player.hasMetadata("ponyType")) {
+			player.getMetadata("ponyType").get(0).invalidate();
+		}
+	}
+
+	public String getFullInfo(Player player) {
+		PonyType activeType = getType(player);
+		PlayerConfigInfo cacheInfo = fromPlayerConfig(player.getName());
+		PonyType webType = webCheck(player.getName());
+		return String
+				.format("%s's Skin info:\nCurrent skin is %s\nCached skin is %s which %s\nWeb skin is %s",
+						player.getName(), activeType.getMessage(),
+						cacheInfo.type.getMessage(), cacheInfo.formatExpire(),
+						webType.getMessage());
+	}
 
 	private PonyType webCheck(String playerName) {
 		try {
@@ -85,11 +102,12 @@ public class PonyChecker implements Listener {
 		PlayerConfigInfo configInfo = fromPlayerConfig(playerName);
 		if (configInfo.hasExpired()) {
 			PonyType webType = webCheck(playerName);
-			if (webType == PonyType.ERROR)
+			if (webType == PonyType.ERROR) {
 				return configInfo.type;
-			if (webType.ignUn() == PonyType.NONE)
+			}
+			if (webType.ignUn() == PonyType.NONE) {
 				saveToPlayerConfig(playerName, new PlayerConfigInfo(webType, 0));
-			else if (webType != configInfo.type) {
+			} else if (webType != configInfo.type) {
 				saveToPlayerConfig(playerName, new PlayerConfigInfo(webType,
 						this.CHANGE_COOLDOWN));
 			}
