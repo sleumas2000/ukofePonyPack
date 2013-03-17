@@ -16,3 +16,5 @@ commands:
     aliases: assign
     usage: 'Usage: /<command> {player} [type] {duration}'
     permission: ukofePonyPack.assign
+  ponyreload:
+    permission: ukofePonyPack.reload

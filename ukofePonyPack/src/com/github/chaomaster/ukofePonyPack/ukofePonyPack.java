@@ -58,6 +58,15 @@ public class ukofePonyPack extends JavaPlugin {
 			sendMessage(sender, this.checker.getFullInfo(target));
 			return true;
 		}
+		//Ponyreload
+		//Forces a reload for the player cache
+		else if (cmd.getName().equalsIgnoreCase("ponyreload")){
+			if (sender != null && !sender.hasPermission("ukofePonyPack.reload")){
+				sendMessage(sender, "You don't have permission to use this command");
+				return true;
+			}
+			this.checker.triggerCacheExpire();
+		}
 		// TODO assign command.
 		return false;
 	}

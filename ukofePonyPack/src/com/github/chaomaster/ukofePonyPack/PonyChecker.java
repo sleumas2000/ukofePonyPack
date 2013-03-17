@@ -55,6 +55,10 @@ public class PonyChecker implements Listener {
 			player.getMetadata("ponyType").get(0).invalidate();
 		}
 	}
+	
+	public void triggerCacheExpire(){
+		this.playerConfig = null;
+	}
 
 	public String getFullInfo(Player player) {
 		PonyType activeType = getType(player);

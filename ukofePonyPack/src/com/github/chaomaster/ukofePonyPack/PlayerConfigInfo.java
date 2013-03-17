@@ -46,8 +46,9 @@ public class PlayerConfigInfo {
 	}
 
 	public boolean hasExpired() {
-		return (this.type == PonyType.ERROR)
-				|| ((!this.forever) && (new Date().after(this.expire)));
+		if(this.type == PonyType.ERROR){return true;} //TODO maybe remove
+		if(this.forever){return false;}
+		return new Date().after(this.expire);
 	}
 
 	public String formatExpire() {
