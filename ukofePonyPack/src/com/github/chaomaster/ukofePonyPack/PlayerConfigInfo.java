@@ -20,8 +20,17 @@ public class PlayerConfigInfo {
 		this.type = t;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
-		cal.add(5, 1);
+		cal.add(5, d);
 		this.expire = cal.getTime();
+	}
+	
+	PlayerConfigInfo(PonyType t,int d,boolean f){
+		this.type = t;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(5, d);
+		this.expire = cal.getTime();
+		this.forever = f;
 	}
 
 	PlayerConfigInfo() {
