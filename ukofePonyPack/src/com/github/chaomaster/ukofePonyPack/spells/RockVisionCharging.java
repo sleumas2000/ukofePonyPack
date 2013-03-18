@@ -31,7 +31,7 @@ public class RockVisionCharging extends ChargedSpell {
 				this.DISABLED = setup.getBoolean("Disabled");
 			}
 			if (setup.isString("ReplaceList")) {
-				String[] blocks = setup.getString("ReplaceBlocks").split(",");
+				String[] blocks = setup.getString("ReplaceList").split(",");
 				for (int i = 0; i < blocks.length; i++)
 					this.REPLACE_LIST.add(Material.getMaterial(Integer
 							.parseInt(blocks[i])));

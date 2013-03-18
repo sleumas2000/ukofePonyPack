@@ -17,6 +17,9 @@ public class ukofePonyPack extends JavaPlugin {
 		ponyPowerMap.put("earth", new EarthPonyPowers(this));
 		ponyPowerMap.put("unicorn", new UnicornPonyPowers(this));
 		ponyPowerMap.put("pegasus", new PegasusPonyPowers(this));
+		for (PonyPowers power : this.ponyPowerMap.values()) {
+			power.reloadConfig();
+		}
 	}
 
 	public void onDisable() {
@@ -105,7 +108,7 @@ public class ukofePonyPack extends JavaPlugin {
 				sendMessage(sender, String.format("%s is now %s", target
 						.getName(), this.checker.getType(target).getMessage()));
 			}
-			if(toType != PonyType.PEGASUS){ //Temp flight problem fix
+			if (toType != PonyType.PEGASUS) { // Temp flight problem fix
 				target.setAllowFlight(false);
 			}
 			return true;
@@ -120,6 +123,7 @@ public class ukofePonyPack extends JavaPlugin {
 			}
 			sendMessage(sender, "Nullifying the player cache to force a reload");
 			this.checker.triggerCacheExpire();
+			return true;
 		}
 		// Ponycachesave
 		// Forces a save of the player cache
@@ -141,17 +145,21 @@ public class ukofePonyPack extends JavaPlugin {
 				return true;
 			}
 			if (args.length == 0) {
+				sendMessage(sender, "Reloading all power config files");
 				for (PonyPowers power : this.ponyPowerMap.values()) {
 					power.reloadConfig();
 				}
+				return true;
 			} else {
 				if (ponyPowerMap.containsKey(args[0].toLowerCase())) {
+					sendMessage(sender, String.format(
+							"Reloading %s power config files", args[0]));
 					ponyPowerMap.get(args[0].toLowerCase()).reloadConfig();
-				} else if (args[0].equalsIgnoreCase("checker")) {
-					checker.reloadConfig();
+					return true;
 				} else {
 					sendMessage(sender,
 							String.format("Powers for %s not found", args[0]));
+					return true;
 				}
 			}
 		}
