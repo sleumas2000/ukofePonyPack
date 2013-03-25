@@ -55,14 +55,12 @@ public class ZebraPonyPowers extends PonyPowers {
 	}
 
 	private void potionSplash(PotionSplashEvent event) {
-		ArrayList<PotionEffect> toGive = new ArrayList<PotionEffect>();
 		for (PotionEffect e : event.getPotion().getEffects()) {
-			toGive.add(new PotionEffect(e.getType(),
-					e.getDuration(),
-					e.getAmplifier() + 1));
-		}
-		for (LivingEntity e : event.getAffectedEntities()) {
-			e.addPotionEffects(toGive);
+			PotionEffect toGive = new PotionEffect(e.getType(),
+					e.getDuration(), e.getAmplifier() + 1);
+			for (LivingEntity p : event.getAffectedEntities()) {
+				p.addPotionEffect(toGive,true);
+			}
 		}
 		event.setCancelled(true);
 	}
