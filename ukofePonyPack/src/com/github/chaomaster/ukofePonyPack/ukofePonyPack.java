@@ -36,6 +36,7 @@ public class ukofePonyPack extends JavaPlugin {
 		ponyPowerMap.put("earth", new EarthPonyPowers(this));
 		ponyPowerMap.put("unicorn", new UnicornPonyPowers(this));
 		ponyPowerMap.put("pegasus", new PegasusPonyPowers(this));
+		ponyPowerMap.put("zebra", new ZebraPonyPowers(this));
 		for (PonyPowers power : this.ponyPowerMap.values()) {
 			power.reloadConfig();
 		}
