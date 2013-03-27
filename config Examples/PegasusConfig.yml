@@ -1,3 +1,6 @@
+disabled: false
+ponyTypes: [Pegasus]
+
 ExaustionPerMeter: 0.22
 ExaustionPerSecond: 0.1
 FoodNeededToFly: 6

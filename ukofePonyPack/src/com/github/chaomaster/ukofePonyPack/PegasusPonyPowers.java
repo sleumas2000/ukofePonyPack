@@ -71,7 +71,7 @@ public class PegasusPonyPowers extends PonyPowers {
 		this.flightTimerChecker.runTaskTimer(plugin, 20L, 20L);
 	}
 
-	public void reloadConfig() {
+	public boolean reloadConfig() {
 		File configFile = new File(this.plugin.getDataFolder(),
 				"PegasusConfig.yml");
 		YamlConfiguration config = YamlConfiguration
@@ -86,11 +86,12 @@ public class PegasusPonyPowers extends PonyPowers {
 		if (config.isInt("FoodNeededToFly")) {
 			this.FOOD_NEEDED_TO_FLY = config.getInt("FoodNeededToFly");
 		}
+		return super.reloadConfig(config);
 	}
 
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
-		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.PEGASUS) {
+		if (isOfActiveType(event.getPlayer())) {
 			if (event.getPlayer().getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
 				event.getPlayer().setAllowFlight(false);
 			} else {
@@ -113,7 +114,7 @@ public class PegasusPonyPowers extends PonyPowers {
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
 		if ((event.getEntity() instanceof Player)) {
 			Player target = (Player) event.getEntity();
-			if (this.plugin.checker.getType(target) == PonyType.PEGASUS) {
+			if (isOfActiveType(target)) {
 				if (event.getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
 					target.setAllowFlight(false);
 				} else {
@@ -125,7 +126,7 @@ public class PegasusPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
-		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.PEGASUS)
+		if (isOfActiveType(event.getPlayer()))
 			if (event.isFlying()) {
 				this.lastFlightPos.put(event.getPlayer(), event.getPlayer()
 						.getLocation());
@@ -140,9 +141,10 @@ public class PegasusPonyPowers extends PonyPowers {
 			if (this.lastFlightPos.containsKey(event.getPlayer())) {
 				this.lastFlightPos.remove(event.getPlayer());
 			}
-		} else {
-			this.plugin.checker.getType(event.getPlayer());
-		}
+		}/*
+		 * else { this.plugin.checker.getType(event.getPlayer()); //Unsure what
+		 * this line does. }
+		 */
 	}
 
 	@EventHandler
@@ -154,8 +156,7 @@ public class PegasusPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
-		if (((event.getEntity() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.PEGASUS)
+		if (isOfActiveType(event.getEntity())
 				&& (event.getCause() == EntityDamageEvent.DamageCause.FALL)) {
 			event.setDamage(0);
 		}

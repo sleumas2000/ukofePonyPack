@@ -45,7 +45,7 @@ public class EarthPonyPowers extends PonyPowers {
 		super(plugin);
 	}
 
-	public void reloadConfig() {
+	public boolean reloadConfig() {
 		File configFile = new File(this.plugin.getDataFolder(),
 				"EarthConfig.yml");
 		YamlConfiguration config = YamlConfiguration
@@ -78,32 +78,30 @@ public class EarthPonyPowers extends PonyPowers {
 		if (config.isInt("carrotBonus")) {
 			this.CARROT_BONUS = config.getInt("carrotBonus");
 		}
+		return super.reloadConfig(config);
 	}
 
 	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
-		if (((event.getEntity() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.EARTH)) {
+		if (isOfActiveType(event.getEntity())) {
 			receivingDamage(event);
 		}
 
-		if (((event.getDamager() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getDamager()) == PonyType.EARTH)) {
+		if (isOfActiveType(event.getDamager())) {
 			dealingDamage(event);
 		}
 	}
 
 	@EventHandler
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
-		if (((event.getEntity() instanceof Player))
-				&& (this.plugin.checker.getType((Player) event.getEntity()) == PonyType.EARTH)) {
+		if (isOfActiveType(event.getEntity())) {
 			gettingHungry(event);
 		}
 	}
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent event) {
-		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.EARTH) {
+		if (isOfActiveType(event.getPlayer())) {
 			Block block = event.getBlock();
 			switch (block.getTypeId()) {
 			case 60:

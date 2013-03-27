@@ -44,7 +44,6 @@ public class ukofePonyPack extends JavaPlugin {
 
 	public void onDisable() {
 		this.checker.savePlayerConfig();
-
 		for (Player p : getServer().getOnlinePlayers())
 			p.removeMetadata("ponyType", this);
 	}

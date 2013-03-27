@@ -47,7 +47,7 @@ public class UnicornPonyPowers extends PonyPowers {
 		this.spellMap = new HashMap<Player, ChargedSpell>();
 	}
 
-	public void reloadConfig() {
+	public boolean reloadConfig() {
 		File configFile = new File(this.plugin.getDataFolder(),
 				"UnicornConfig.yml");
 		YamlConfiguration config = YamlConfiguration
@@ -56,11 +56,12 @@ public class UnicornPonyPowers extends PonyPowers {
 		this.TELEPORT_CONFIG = config.getConfigurationSection("TeleportConfig");
 		this.ROCK_VISION_CONFIG = config
 				.getConfigurationSection("RockVisionConfig");
+		return super.reloadConfig(config);
 	}
 
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		if ((this.plugin.checker.getType(event.getPlayer()) == PonyType.UNICORN)
+		if ((isOfActiveType(event.getPlayer()))
 				&& ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event
 						.getAction() == Action.RIGHT_CLICK_BLOCK)))
 			if (event.getMaterial() == Material.MAP)
@@ -75,7 +76,7 @@ public class UnicornPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event) {
-		if (this.plugin.checker.getType(event.getPlayer()) == PonyType.UNICORN) {
+		if (isOfActiveType(event.getPlayer())) {
 			Location from = event.getFrom();
 			Location to = event.getTo();
 			if ((from.getX() != to.getX()) || (from.getY() != to.getY())

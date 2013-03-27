@@ -1,3 +1,6 @@
+disabled: false
+ponyTypes: [Unicorn]
+
 TeleportConfig:
   ChargeTicks: 100
   HungerCost: 8

@@ -19,18 +19,24 @@
 
 package com.github.chaomaster.ukofePonyPack;
 
+import java.util.HashSet;
 import java.util.Random;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public abstract class PonyPowers implements Listener {
 	protected ukofePonyPack plugin;
 	protected final Random rand;
 
+	private boolean DISABLED = false;
+	protected HashSet<PonyType> ACTIVETYPES = new HashSet<PonyType>();
+
 	public PonyPowers(ukofePonyPack plugin) {
 		this.rand = new Random();
 		this.plugin = plugin;
-		reloadConfig();
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -38,5 +44,25 @@ public abstract class PonyPowers implements Listener {
 		return this.plugin;
 	}
 
-	public abstract void reloadConfig();
+	public abstract boolean reloadConfig();
+	
+	protected boolean reloadConfig(YamlConfiguration config) {
+		if (config.isBoolean("disabled")) {
+			this.DISABLED = config.getBoolean("disabled");
+		}
+		if (config.isList("ponyTypes")) {
+			this.ACTIVETYPES.clear();
+			for (Object t : config.getList("ponyTypes")) {
+				this.ACTIVETYPES.add(PonyType.valueOf(((String) t)
+						.toUpperCase()));
+			}
+		}
+		return this.DISABLED;
+	}
+
+	protected boolean isOfActiveType(Entity player) {
+		return (player instanceof Player)
+				&& (this.ACTIVETYPES.contains(this.plugin.checker
+						.getType((Player) player)));
+	}
 }

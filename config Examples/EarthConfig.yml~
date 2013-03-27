@@ -1,3 +1,6 @@
+disabled: false
+
+
 damageMultiplier: 1.1
 resistanceDivisor: 1.1
 foodbarMinium: 5

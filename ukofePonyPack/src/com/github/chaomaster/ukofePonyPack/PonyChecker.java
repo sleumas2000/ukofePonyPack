@@ -68,14 +68,14 @@ public class PonyChecker implements Listener {
 		return (PonyType) ((MetadataValue) player.getMetadata("ponyType")
 				.get(0)).value();
 	}
-	
-	public void triggerExpire(Player player){
+
+	public void triggerExpire(Player player) {
 		if (player.hasMetadata("ponyType")) {
 			player.getMetadata("ponyType").get(0).invalidate();
 		}
 	}
-	
-	public void triggerCacheExpire(){
+
+	public void triggerCacheExpire() {
 		this.playerConfig = null;
 	}
 
@@ -98,21 +98,25 @@ public class PonyChecker implements Listener {
 					+ playerName + ".png");
 			BufferedImage skin = ImageIO.read(skinUrl);
 
-			int pix = skin.getRGB(0, 0);
-			if (pix == -413391)
+			switch (skin.getRGB(0, 0)) {
+			case -413391:
 				return PonyType.EARTH;
-			if (pix == -7812368)
+			case -7812368:
 				return PonyType.PEGASUS;
-			if (pix == -3039260)
+			case -3039260:
 				return PonyType.UNICORN;
-			if (pix == -67076) {
+			case -67076:
 				return PonyType.ALICORN;
+			case 0xFFD0CCCF:
+				return PonyType.ZEBRA;
+			case 0xFF282b29:
+				return PonyType.CHANGELING;
+			default:
+				return PonyType.NONE;
 			}
-			return PonyType.NONE;
 		} catch (MalformedURLException ex) {
 			this.plugin.getLogger().info(
 					"MalforumedURLException with " + playerName + "'s skin");
-
 			return PonyType.ERROR;
 		} catch (IOException ex) {
 			this.plugin.getLogger().info(

@@ -16,14 +16,15 @@
 package com.github.chaomaster.ukofePonyPack;
 
 public enum PonyType {
-	ERROR("A Human due to an error"),
-	UNSET("A Human as it is unset"),
-	NONE("A Human"),
-	PEGASUS("A Pegasus"),
-	UNICORN("An Unicorn"),
-	EARTH("A Earth pony"),
-	ALICORN("An Alicorn"),
-	ZEBRA("A Zebra");
+	ERROR("a Human due to an error"),
+	UNSET("a Human as it is unset"),
+	NONE("a Human"),
+	PEGASUS("a Pegasus"),
+	UNICORN("a Unicorn"),
+	EARTH("a Earth pony"),
+	ALICORN("an Alicorn"),
+	ZEBRA("a Zebra"),
+	CHANGELING("a Changeling");
 
 	private String _message;
 

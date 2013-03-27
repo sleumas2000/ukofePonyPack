@@ -19,15 +19,11 @@
 
 package com.github.chaomaster.ukofePonyPack;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.File;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.potion.PotionEffect;
 
@@ -37,20 +33,18 @@ public class ZebraPonyPowers extends PonyPowers {
 		super(plugin);
 	}
 
-	@Override
-	public void reloadConfig() {
-		// TODO identify and load config.
+	public boolean reloadConfig() {
+		File configFile = new File(this.plugin.getDataFolder(),
+				"ZebraConfig.yml");
+		YamlConfiguration config = YamlConfiguration
+				.loadConfiguration(configFile);
+		return super.reloadConfig(config);
 	}
 
 	@EventHandler
 	public void onPotionSplashEvent(PotionSplashEvent event) {
-		Entity tThrower = event.getPotion().getShooter();
-		Player thrower;
-		if (tThrower instanceof Player) {
-			thrower = (Player) tThrower;
-			if (this.plugin.checker.getType(thrower) == PonyType.ZEBRA) {
-				potionSplash(event);
-			}
+		if (isOfActiveType(event.getPotion().getShooter())) {
+			potionSplash(event);
 		}
 	}
 
@@ -59,7 +53,7 @@ public class ZebraPonyPowers extends PonyPowers {
 			PotionEffect toGive = new PotionEffect(e.getType(),
 					e.getDuration(), e.getAmplifier() + 1);
 			for (LivingEntity p : event.getAffectedEntities()) {
-				p.addPotionEffect(toGive,true);
+				p.addPotionEffect(toGive, true);
 			}
 		}
 		event.setCancelled(true);

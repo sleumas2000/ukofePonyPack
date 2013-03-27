@@ -12,7 +12,7 @@ RockVisionConfig:
     DurationTicks: 300
     Disabled: false
     ReplaceList: "1,14,15,21,56,73,74"
-  Stone: false
+  Stone:
     ChargeTicks: 100
     HungerCost: 6
     VisionDistance: 3
