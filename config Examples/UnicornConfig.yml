@@ -2,6 +2,8 @@ disabled: false
 ponyTypes: [Unicorn]
 
 TeleportConfig:
+  AllowedEnvironments: [Normal, Nether]
+  AllowCrossWorld: false
   ChargeTicks: 100
   HungerCost: 8
   Deviation: 20
