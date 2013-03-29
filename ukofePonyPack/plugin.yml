@@ -5,23 +5,26 @@ description: Provides various pony powers based on the player's skin.
 author: chao-master.github
 commands:
   ponyinfo:
-    aliases: info
+    aliases: [info,pinfo]
     usage: 'Usage: /<command> {player} - Returns skin info on the given player'
     permission: ukofePonyPack.info
   ponyrecheck:
-    aliases: recheck
+    aliases: [recheck,precheck]
     usage: "Usage: /<command> {player} - Rechecks a player's skin"
     permission: ukofePonyPack.recheck
   ponyassign:
-    aliases: assign
+    aliases: [assign,passign]
     usage: 'Usage: /<command> [player] [type] {duration} - Assigns the player to the given pony type'
     permission: ukofePonyPack.assign
   ponycachereload:
+    aliases: [pcachereload]
     usage: 'Usage: /<command> - Forces a reload of the player skin cache'
     permission: ukofePonyPack.cachereload
   ponycachesave:
+    aliases: [pcachesave]
     usage: 'Usage: /<command> - Forces a save of the player skin cache'
     permission: ukofePonyPack.cachesave
   ponyconfigreload:
+    aliases: [pconfigreload]
     usage: 'Usage: /<command> {section} - Forces a reload of given pony power config, or the checker'
     permission: ukofePonyPack.configreload
