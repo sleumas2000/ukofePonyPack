@@ -35,13 +35,13 @@ RockVisionConfig:
     ChargeTicks: 40
     HungerCost: 6
     VisionDistance: 6
-    DurationTicks: 100 
+    DurationTicks: 1000 
     Disabled: false
     ReplaceList: "1,3"
   Diamond:
     ChargeTicks: 50
     HungerCost: 6
     VisionDistance: 5
-    DurationTicks: 80
+    DurationTicks: 800
     Disabled: false
     ReplaceList: "1,3"
