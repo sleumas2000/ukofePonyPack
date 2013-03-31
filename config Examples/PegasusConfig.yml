@@ -1,5 +1,5 @@
 disabled: false
-ponyTypes: [Pegasus]
+ponyTypes: [Pegasus,Changeling]
 
 ExaustionPerMeter: 0.22
 ExaustionPerSecond: 0.1
