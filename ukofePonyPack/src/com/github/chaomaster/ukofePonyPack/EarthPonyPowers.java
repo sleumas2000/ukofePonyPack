@@ -103,36 +103,38 @@ public class EarthPonyPowers extends PonyPowers {
 	public void onBlockBreakEvent(BlockBreakEvent event) {
 		if (isOfActiveType(event.getPlayer())) {
 			Block block = event.getBlock();
-			switch (block.getTypeId()) {
-			case 60:
+			switch (block.getType()) {
+			case CROPS:
 				if (block.getData() == 7) {
 					harvestingCrops(event, new ItemStack(Material.WHEAT,
 							this.WHEAT_BONUS));
 				}
 				break;
-			case 263:
+			case NETHER_STALK:
 				if (block.getData() == 3) {
 					harvestingCrops(event, new ItemStack(Material.NETHER_WARTS,
 							this.NETHER_WART_BONUS));
 				}
 				break;
-			case 128:
+			case COCOA:
 				if ((block.getData() & 0x8) == 8) {
 					harvestingCrops(event, new ItemStack(Material.INK_SACK,
 							this.COCOA_BONUS, (short) 3));
 				}
 				break;
-			case 143:
+			case POTATO:
 				if (block.getData() == 7) {
 					harvestingCrops(event, new ItemStack(Material.POTATO_ITEM,
 							this.POTATO_BONUS));
 				}
 				break;
-			case 142:
+			case CARROT:
 				if (block.getData() == 7) {
 					harvestingCrops(event, new ItemStack(Material.CARROT_ITEM,
 							this.CARROT_BONUS));
 				}
+				break;
+			default:
 				break;
 			}
 		}
