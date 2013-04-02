@@ -74,7 +74,6 @@ public class TeleportSpell extends ChargedSpell {
 		if (!this.ALLOWEDENVIRONMENTS.contains(this.target.getWorld()
 				.getEnvironment())) {
 			this.caster.sendMessage("You cannot teleport to that kind of relm");
-			cancel();
 			removeSelf();
 			return;
 		}
@@ -82,7 +81,6 @@ public class TeleportSpell extends ChargedSpell {
 				&& !caster.getLocation().getWorld().equals(target.getWorld())) {
 			this.caster
 					.sendMessage("You must be in the same world as the map's target to teleport.");
-			cancel();
 			removeSelf();
 			return;
 		}

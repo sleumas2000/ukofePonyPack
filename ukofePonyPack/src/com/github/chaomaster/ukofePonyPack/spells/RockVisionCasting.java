@@ -48,7 +48,7 @@ public class RockVisionCasting extends ChargedSpell {
 
 	public void start() {
 		super.start();
-		step();
+		//step();
 		this.lastLoc = this.caster.getLocation().getBlock().getLocation();
 	}
 

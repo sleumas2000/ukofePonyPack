@@ -64,6 +64,7 @@ public class UnicornPonyPowers extends PonyPowers {
 		if ((isOfActiveType(event.getPlayer()))
 				&& ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event
 						.getAction() == Action.RIGHT_CLICK_BLOCK)))
+			//TODO check if interacting with interactable.
 			if (event.getMaterial() == Material.MAP)
 				mapTeleportStart(event.getPlayer());
 			else if ((event.getMaterial() == Material.WOOD_PICKAXE)
