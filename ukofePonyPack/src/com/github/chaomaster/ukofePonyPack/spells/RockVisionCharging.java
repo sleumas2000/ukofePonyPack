@@ -30,7 +30,6 @@ import org.bukkit.entity.Player;
 public class RockVisionCharging extends ChargedSpell {
 	private int VISION_DISTANCE = 5;
 	private int DURATION_TICKS = 600;
-	private boolean DISABLED = false;
 	private HashSet<Material> REPLACE_LIST = new HashSet<Material>();
 
 	private final Material CHARGING_BLOCK = Material.ICE;
@@ -40,14 +39,15 @@ public class RockVisionCharging extends ChargedSpell {
 			ConfigurationSection setup) {
 		super(caster, handler, setup);
 		if (setup != null) {
+			if (setup.isBoolean("Disabled")) {
+				this.disabled = setup.getBoolean("Disabled");
+				return;
+			}
 			if (setup.isInt("VisionDistance")) {
 				this.VISION_DISTANCE = setup.getInt("VisionDistance");
 			}
 			if (setup.isInt("DurationTicks")) {
 				this.DURATION_TICKS = setup.getInt("DurationTicks");
-			}
-			if (setup.isBoolean("Disabled")) {
-				this.DISABLED = setup.getBoolean("Disabled");
 			}
 			if (setup.isString("ReplaceList")) {
 				String[] blocks = setup.getString("ReplaceList").split(",");
@@ -60,13 +60,6 @@ public class RockVisionCharging extends ChargedSpell {
 		} else {
 			this.REPLACE_LIST.add(Material.STONE);
 		}
-	}
-
-	public void start() {
-		if (!this.DISABLED)
-			super.start();
-		else
-			removeSelf();
 	}
 
 	public void step() {

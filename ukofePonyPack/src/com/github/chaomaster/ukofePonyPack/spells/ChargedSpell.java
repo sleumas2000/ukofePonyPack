@@ -35,6 +35,7 @@ public abstract class ChargedSpell extends BukkitRunnable {
 	protected byte castingEffectData;
 	protected Player caster;
 	protected UnicornPonyPowers handler;
+	protected boolean disabled = false;
 
 	public ChargedSpell(Player caster, UnicornPonyPowers handler,
 			ConfigurationSection setup) {
@@ -50,6 +51,10 @@ public abstract class ChargedSpell extends BukkitRunnable {
 		this.castingEffectData = 0;
 		this.caster = caster;
 		this.handler = handler;
+	}
+	
+	public boolean isDisabled(){
+		return disabled;
 	}
 
 	public void start() {

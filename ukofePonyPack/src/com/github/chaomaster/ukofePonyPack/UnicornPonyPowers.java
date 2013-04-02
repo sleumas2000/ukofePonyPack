@@ -87,7 +87,7 @@ public class UnicornPonyPowers extends PonyPowers {
 	}
 
 	public void setChargeSpell(Player caster, ChargedSpell spell) {
-		if (!this.spellMap.containsKey(caster)) {
+		if (!this.spellMap.containsKey(caster) && !spell.isDisabled()) {
 			this.spellMap.put(caster, spell);
 			spell.start();
 		}

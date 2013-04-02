@@ -75,6 +75,7 @@ public class TeleportSpell extends ChargedSpell {
 				.getEnvironment())) {
 			this.caster.sendMessage("You cannot teleport to that kind of relm");
 			removeSelf();
+			disabled = true;
 			return;
 		}
 		if (!this.ALLOWCROSSWORLD
@@ -82,6 +83,7 @@ public class TeleportSpell extends ChargedSpell {
 			this.caster
 					.sendMessage("You must be in the same world as the map's target to teleport.");
 			removeSelf();
+			disabled = true;
 			return;
 		}
 	}
