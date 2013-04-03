@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -73,15 +74,21 @@ public class PegasusPonyPowers extends PonyPowers {
 		this.flightTimerChecker.runTaskTimer(plugin, 20L, 20L);
 	}
 
-	public void checkAssignFlight(Entity entity) {
+	public void checkAssignFlight(Entity entity, int newFoodLevel) {
 		if (isOfActiveType(entity)) {
 			Player player = (Player) entity;
-			if (player.getFoodLevel() < this.FOOD_NEEDED_TO_FLY
+			if (newFoodLevel < this.FOOD_NEEDED_TO_FLY
 					|| player.getGameMode() == GameMode.CREATIVE) {
 				player.setAllowFlight(false);
 			} else {
 				player.setAllowFlight(true);
 			}
+		}
+	}
+
+	public void checkAssignFlight(Entity entity) {
+		if (isOfActiveType(entity)) {
+			checkAssignFlight((Player) entity, ((Player) entity).getFoodLevel());
 		}
 	}
 
@@ -107,24 +114,27 @@ public class PegasusPonyPowers extends PonyPowers {
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 		checkAssignFlight(event.getPlayer());
 	}
+
 	@EventHandler
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 		checkAssignFlight(event.getPlayer());
-	}	
+	}
+
 	@EventHandler
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
-		checkAssignFlight(event.getEntity());
+		checkAssignFlight(event.getEntity(),event.getFoodLevel());
 	}
 
 	@EventHandler
 	public void onPlayerQuitEvent(PlayerQuitEvent event) {
 		event.getPlayer().setAllowFlight(false);
 	}
+
 	@EventHandler
 	public void onPlayerKickEvent(PlayerKickEvent event) {
 		event.getPlayer().setAllowFlight(false);
 	}
-	
+
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
 		if (isOfActiveType(event.getPlayer()))
@@ -143,15 +153,26 @@ public class PegasusPonyPowers extends PonyPowers {
 				this.lastFlightPos.remove(event.getPlayer());
 			}
 		}
-		//TODO, UNSURE HOW, if able to fly reassign when exiting creative
-		//At current the system seems to handle the flight removal after.
-		//Might be able to completely redo the assignment.
+		// TODO, UNSURE HOW, if able to fly reassign when exiting creative
+		// At current the system seems to handle the flight removal after.
+		// Might be able to completely redo the assignment.
 	}
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		if (this.lastFlightPos.containsKey(event.getPlayer())) {
 			this.lastFlightPos.put(event.getPlayer(), event.getTo());
+		}
+	}
+
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
+			if (this.lastFlightPos.containsKey(player)) {
+				this.lastFlightPos.remove(player);
+				player.setAllowFlight(false);
+			}
 		}
 	}
 
