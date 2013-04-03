@@ -103,29 +103,30 @@ public class TeleportSpell extends ChargedSpell {
 		Location from = this.caster.getLocation();
 		int distSquared = this.GROUP_RANGE * this.GROUP_RANGE;
 		for (Player p : this.handler.getPlugin().getServer().getOnlinePlayers()) {
-			Location tTo = null;
-			int counter = 0;
-			do {
-				if ((p.getWorld() == from.getWorld())
-						&& (p.getLocation().distanceSquared(from) <= distSquared)) {
+			if ((p.getWorld() == from.getWorld())
+					&& (p.getLocation().distanceSquared(from) <= distSquared)) {
+				Location tTo = null;
+				int counter = 0;
+				do {
 					int localX = this.target.getBlockX()
 							+ this.rand.nextInt(this.GROUP_DEVIATION * 2 + 1)
 							- this.GROUP_DEVIATION;
 					int localZ = this.target.getBlockZ()
 							+ this.rand.nextInt(this.GROUP_DEVIATION * 2 + 1)
 							- this.GROUP_DEVIATION;
-					int localY = this.target.getWorld().getHighestBlockYAt(localX,
-							localZ)
+					int localY = this.target.getWorld().getHighestBlockYAt(
+							localX, localZ)
 							+ this.rand.nextInt(this.GROUP_DEVIATION + 1) + 1;
-					
-					tTo = new Location(this.target.getWorld(), localX, localY, localZ);
+
+					tTo = new Location(this.target.getWorld(), localX, localY,
+							localZ);
 					counter++;
+				} while (!tTo.getBlock().isEmpty() && counter < 1000);
+				if (tTo.getBlock().isEmpty()) {
+					p.teleport(tTo);
+				} else {
+					p.sendMessage("Teleport failed");
 				}
-			} while (!tTo.getBlock().isEmpty() && counter<1000);
-			if (tTo.getBlock().isEmpty()){
-				p.teleport(tTo);
-			} else {
-				p.sendMessage("Teleport failed");
 			}
 		}
 		this.target.getWorld().strikeLightningEffect(this.target);
