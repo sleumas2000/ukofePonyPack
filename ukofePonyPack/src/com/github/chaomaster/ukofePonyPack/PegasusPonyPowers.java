@@ -27,6 +27,7 @@ import java.util.Map;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -35,6 +36,7 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -57,7 +59,7 @@ public class PegasusPonyPowers extends PonyPowers {
 					Map.Entry entry = (Map.Entry) entries.next();
 					Player p = (Player) entry.getKey();
 					Location l = (Location) entry.getValue();
-					if (!p.isFlying()) {
+					if (!p.isFlying() || p.getGameMode() == GameMode.CREATIVE) {
 						entries.remove();
 					} else {
 						p.setExhaustion((float) (p.getExhaustion()
@@ -69,6 +71,18 @@ public class PegasusPonyPowers extends PonyPowers {
 			}
 		};
 		this.flightTimerChecker.runTaskTimer(plugin, 20L, 20L);
+	}
+
+	public void checkAssignFlight(Entity entity) {
+		if (isOfActiveType(entity)) {
+			Player player = (Player) entity;
+			if (player.getFoodLevel() < this.FOOD_NEEDED_TO_FLY
+					|| player.getGameMode() == GameMode.CREATIVE) {
+				player.setAllowFlight(false);
+			} else {
+				player.setAllowFlight(true);
+			}
+		}
 	}
 
 	public boolean reloadConfig() {
@@ -91,39 +105,26 @@ public class PegasusPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
-		if (isOfActiveType(event.getPlayer())) {
-			if (event.getPlayer().getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
-				event.getPlayer().setAllowFlight(false);
-			} else {
-				event.getPlayer().setAllowFlight(true);
-			}
-		}
+		checkAssignFlight(event.getPlayer());
+	}
+	@EventHandler
+	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+		checkAssignFlight(event.getPlayer());
+	}	
+	@EventHandler
+	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
+		checkAssignFlight(event.getEntity());
 	}
 
 	@EventHandler
 	public void onPlayerQuitEvent(PlayerQuitEvent event) {
 		event.getPlayer().setAllowFlight(false);
 	}
-
 	@EventHandler
 	public void onPlayerKickEvent(PlayerKickEvent event) {
 		event.getPlayer().setAllowFlight(false);
 	}
-
-	@EventHandler
-	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
-		if ((event.getEntity() instanceof Player)) {
-			Player target = (Player) event.getEntity();
-			if (isOfActiveType(target)) {
-				if (event.getFoodLevel() < this.FOOD_NEEDED_TO_FLY) {
-					target.setAllowFlight(false);
-				} else {
-					target.setAllowFlight(true);
-				}
-			}
-		}
-	}
-
+	
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
 		if (isOfActiveType(event.getPlayer()))
@@ -141,10 +142,10 @@ public class PegasusPonyPowers extends PonyPowers {
 			if (this.lastFlightPos.containsKey(event.getPlayer())) {
 				this.lastFlightPos.remove(event.getPlayer());
 			}
-		}/*
-		 * else { this.plugin.checker.getType(event.getPlayer()); //Unsure what
-		 * this line does. }
-		 */
+		}
+		//TODO, UNSURE HOW, if able to fly reassign when exiting creative
+		//At current the system seems to handle the flight removal after.
+		//Might be able to completely redo the assignment.
 	}
 
 	@EventHandler
