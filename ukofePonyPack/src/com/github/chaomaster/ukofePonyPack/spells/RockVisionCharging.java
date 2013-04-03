@@ -41,7 +41,9 @@ public class RockVisionCharging extends ChargedSpell {
 		if (setup != null) {
 			if (setup.isBoolean("Disabled")) {
 				this.disabled = setup.getBoolean("Disabled");
-				return;
+				if (this.disabled){
+					return;
+				}
 			}
 			if (setup.isInt("VisionDistance")) {
 				this.VISION_DISTANCE = setup.getInt("VisionDistance");
