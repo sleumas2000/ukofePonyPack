@@ -63,9 +63,11 @@ public class PegasusPonyPowers extends PonyPowers {
 					if (!p.isFlying() || p.getGameMode() == GameMode.CREATIVE) {
 						entries.remove();
 					} else {
-						p.setExhaustion((float) (p.getExhaustion()
-								+ l.distance(p.getLocation())
-								* PegasusPonyPowers.this.EXHAUSTION_PER_METER + PegasusPonyPowers.this.EXHAUSTION_PER_SECOND));
+						if (l.getWorld().equals(p.getWorld())) {
+							p.setExhaustion((float) (p.getExhaustion()
+									+ l.distance(p.getLocation())
+									* PegasusPonyPowers.this.EXHAUSTION_PER_METER + PegasusPonyPowers.this.EXHAUSTION_PER_SECOND));
+						}
 						entry.setValue(p.getLocation());
 					}
 				}
@@ -122,7 +124,7 @@ public class PegasusPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
-		checkAssignFlight(event.getEntity(),event.getFoodLevel());
+		checkAssignFlight(event.getEntity(), event.getFoodLevel());
 	}
 
 	@EventHandler
