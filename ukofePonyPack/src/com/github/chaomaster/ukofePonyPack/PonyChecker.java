@@ -51,9 +51,10 @@ public class PonyChecker implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		triggerExpire(event.getPlayer());
 		event.getPlayer().sendMessage(
 				"You are " + getType(event.getPlayer()).getMessage());
-	}
+	} 
 
 	public PonyType getType(final Player player) {
 		if (!player.hasMetadata("ponyType")) {
