@@ -61,18 +61,25 @@ public class UnicornPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		if ((isOfActiveType(event.getPlayer()))
-				&& ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event
-						.getAction() == Action.RIGHT_CLICK_BLOCK)))
-			//TODO check if interacting with interactable.
-			if (event.getMaterial() == Material.MAP)
-				mapTeleportStart(event.getPlayer());
-			else if ((event.getMaterial() == Material.WOOD_PICKAXE)
-					|| (event.getMaterial() == Material.STONE_PICKAXE)
-					|| (event.getMaterial() == Material.IRON_PICKAXE)
-					|| (event.getMaterial() == Material.GOLD_PICKAXE)
-					|| (event.getMaterial() == Material.DIAMOND_PICKAXE))
-				rockVisionStart(event.getPlayer());
+		if (!isOfActiveType(event.getPlayer())) {
+			return;
+		}
+		if (event.getAction() != Action.RIGHT_CLICK_AIR
+				&& event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+			return;
+		}
+		if (materialInteractable(event.getClickedBlock().getType())) {
+			return;
+		}
+		if (event.getMaterial() == Material.MAP) {
+			mapTeleportStart(event.getPlayer());
+		} else if ((event.getMaterial() == Material.WOOD_PICKAXE)
+				|| (event.getMaterial() == Material.STONE_PICKAXE)
+				|| (event.getMaterial() == Material.IRON_PICKAXE)
+				|| (event.getMaterial() == Material.GOLD_PICKAXE)
+				|| (event.getMaterial() == Material.DIAMOND_PICKAXE)) {
+			rockVisionStart(event.getPlayer());
+		}
 	}
 
 	@EventHandler

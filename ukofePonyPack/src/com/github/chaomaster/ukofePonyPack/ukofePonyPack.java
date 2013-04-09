@@ -21,6 +21,7 @@ package com.github.chaomaster.ukofePonyPack;
 
 import java.util.HashMap;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -78,7 +79,7 @@ public class ukofePonyPack extends JavaPlugin {
 				return true;
 			}
 			if (cmd.getName().equalsIgnoreCase("recheck")) {
-				this.checker.triggerExpire(target);
+				this.checker.triggerExpire((Player) target);
 			}
 			sendMessage(sender, this.checker.getFullInfo(target));
 			return true;
@@ -194,7 +195,7 @@ public class ukofePonyPack extends JavaPlugin {
 		}
 	}
 
-	private boolean selfOtherPermCheck(Player sender, Player target,
+	private boolean selfOtherPermCheck(Player sender, OfflinePlayer target,
 			String baseNode) {
 		if (sender == null) {
 			return true;

@@ -22,6 +22,7 @@ package com.github.chaomaster.ukofePonyPack;
 import java.util.HashSet;
 import java.util.Random;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -64,5 +65,39 @@ public abstract class PonyPowers implements Listener {
 		return (player instanceof Player)
 				&& (this.ACTIVETYPES.contains(this.plugin.checker
 						.getType((Player) player)));
+	}
+	
+	protected boolean materialInteractable(Material material){
+		switch(material){
+		case DISPENSER:
+		case BED_BLOCK:
+		case CHEST:
+		case WORKBENCH:
+		case FURNACE:
+		case BURNING_FURNACE:
+		case WOODEN_DOOR:
+		case LEVER: 
+		case STONE_BUTTON:
+		case NOTE_BLOCK:
+		case JUKEBOX:
+		case DIODE_BLOCK_OFF:
+		case DIODE_BLOCK_ON: 
+		case TRAP_DOOR:
+		case FENCE_GATE:
+		case ENCHANTMENT_TABLE:
+		case BREWING_STAND:
+		case ENDER_CHEST:
+		case COMMAND:
+		case BEACON:
+		case WOOD_BUTTON:
+		case TRAPPED_CHEST:
+		case REDSTONE_COMPARATOR_ON:
+		case REDSTONE_COMPARATOR_OFF:
+		case HOPPER:
+		case DROPPER:
+			return true;
+		default:
+			return false;
+		}
 	}
 }

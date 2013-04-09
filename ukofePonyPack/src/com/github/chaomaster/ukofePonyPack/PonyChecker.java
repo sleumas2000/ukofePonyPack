@@ -28,6 +28,7 @@ import java.util.concurrent.Callable;
 
 import javax.imageio.ImageIO;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -70,9 +71,9 @@ public class PonyChecker implements Listener {
 				.get(0)).value();
 	}
 
-	public void triggerExpire(Player player) {
-		if (player.hasMetadata("ponyType")) {
-			player.getMetadata("ponyType").get(0).invalidate();
+	public void triggerExpire(Player target) {
+		if (target.hasMetadata("ponyType")) {
+			target.getMetadata("ponyType").get(0).invalidate();
 		}
 	}
 
