@@ -46,7 +46,7 @@ public abstract class PonyPowers implements Listener {
 	}
 
 	public abstract boolean reloadConfig();
-	
+
 	protected boolean reloadConfig(YamlConfiguration config) {
 		if (config.isBoolean("disabled")) {
 			this.DISABLED = config.getBoolean("disabled");
@@ -66,8 +66,9 @@ public abstract class PonyPowers implements Listener {
 				&& (this.ACTIVETYPES.contains(this.plugin.checker
 						.getType((Player) player)));
 	}
-	
+
 	protected boolean materialInteractable(Material material){
+		if (material == null){return false;}
 		switch(material){
 		case DISPENSER:
 		case BED_BLOCK:
