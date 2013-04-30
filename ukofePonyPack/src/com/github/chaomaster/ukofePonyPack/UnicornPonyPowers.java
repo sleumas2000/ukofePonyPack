@@ -68,7 +68,8 @@ public class UnicornPonyPowers extends PonyPowers {
 				&& event.getAction() != Action.RIGHT_CLICK_BLOCK) {
 			return;
 		}
-		if (materialInteractable(event.getClickedBlock().getType())) {
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK
+				&& materialInteractable(event.getClickedBlock().getType())) {
 			return;
 		}
 		if (event.getMaterial() == Material.MAP) {

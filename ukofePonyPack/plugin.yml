@@ -26,5 +26,5 @@ commands:
     permission: ukofePonyPack.cachesave
   ponyconfigreload:
     aliases: [pconfigreload]
-    usage: 'Usage: /<command> {section} - Forces a reload of given pony power config, or the checker'
+    usage: 'Usage: /<command> {section} - Forces a reload of all/the given pony power config'
     permission: ukofePonyPack.configreload
