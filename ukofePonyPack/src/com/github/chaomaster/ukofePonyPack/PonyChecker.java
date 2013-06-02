@@ -93,11 +93,19 @@ public class PonyChecker implements Listener {
 	}
 
 	private PonyType webCheck(String playerName) {
+		PonyType type;
+		type = serverWebCheck(playerName,"http://www.minelittlepony.com/hd/skins/");
+		if (type == PonyType.ERROR) {
+			type = serverWebCheck(playerName,"http://s3.amazonaws.com/MinecraftSkins/");
+		}
+		return type;
+	}
+	
+	private PonyType serverWebCheck(String playerName,String serverBase) {
 		try {
-			this.plugin.getLogger().info("Getting " + playerName + "'s skin");
+			this.plugin.getLogger().info("Getting " + playerName + "'s skin from " + serverBase);
 
-			URL skinUrl = new URL("http://s3.amazonaws.com/MinecraftSkins/"
-					+ playerName + ".png");
+			URL skinUrl = new URL(serverBase + playerName + ".png");
 			BufferedImage skin = ImageIO.read(skinUrl);
 
 			switch (skin.getRGB(0, 0)) {
@@ -118,11 +126,11 @@ public class PonyChecker implements Listener {
 			}
 		} catch (MalformedURLException ex) {
 			this.plugin.getLogger().info(
-					"MalforumedURLException with " + playerName + "'s skin");
+					"MalforumedURLException with " + playerName + "'s skin from " + serverBase);
 			return PonyType.ERROR;
 		} catch (IOException ex) {
 			this.plugin.getLogger().info(
-					"IOException with " + playerName + "'s skin");
+					"IOException with " + playerName + "'s skin from " + serverBase);
 		}
 		return PonyType.ERROR;
 	}
