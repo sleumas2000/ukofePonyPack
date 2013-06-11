@@ -178,9 +178,9 @@ public class PegasusPonyPowers extends PonyPowers {
 					E += (int) ((6+p*p)*0.75/3) + (int) ((6+f*f)*2.5/3);
 				}
 				if (E>25){E=25;}
-				E = (int) rand.nextDouble()*E;
+				E = (int) ((rand.nextDouble()/2+0.5)*E);
 				if (E>20){E=20;}
-				event.getPlayer().damage((int) (E*0.04*5));
+				event.getPlayer().damage((int) ((1-(E*0.04))*5));
 			}
 		}
 	}
@@ -199,7 +199,7 @@ public class PegasusPonyPowers extends PonyPowers {
 	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if (isOfActiveType(event.getEntity())
-				&& (event.getCause() == EntityDamageEvent.DamageCause.FALL)) {
+			&& (event.getCause() == EntityDamageEvent.DamageCause.FALL)) {
 			event.setDamage(0);
 		}
 	}

@@ -1,6 +1,6 @@
 name: ukofePonyPack
 main: com.github.chaomaster.ukofePonyPack.ukofePonyPack
-version: 0.5.0_
+version: 0.6.0_
 description: Provides various pony powers based on the player's skin.
 author: chao-master.github
 commands:
