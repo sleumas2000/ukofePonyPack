@@ -27,9 +27,11 @@ import java.util.Map;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -39,7 +41,9 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PegasusPonyPowers extends PonyPowers {
@@ -162,8 +166,22 @@ public class PegasusPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		if (this.lastFlightPos.containsKey(event.getPlayer())) {
-			this.lastFlightPos.put(event.getPlayer(), event.getTo());
+		if (isOfActiveType(event.getPlayer())){
+			if (this.lastFlightPos.containsKey(event.getPlayer())) {
+				this.lastFlightPos.put(event.getPlayer(), event.getTo());
+			}
+			if (event.getCause() == TeleportCause.ENDER_PEARL) {
+				int E = 0;
+				for (ItemStack i:event.getPlayer().getEquipment().getArmorContents()){
+					int p = i.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+					int f = i.getEnchantmentLevel(Enchantment.PROTECTION_FALL);
+					E += (int) ((6+p*p)*0.75/3) + (int) ((6+f*f)*2.5/3);
+				}
+				if (E>25){E=25;}
+				E = (int) rand.nextDouble()*E;
+				if (E>20){E=20;}
+				event.getPlayer().damage((int) (E*0.04*5));
+			}
 		}
 	}
 
@@ -185,4 +203,11 @@ public class PegasusPonyPowers extends PonyPowers {
 			event.setDamage(0);
 		}
 	}
+
+	/*
+	 * public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
+	 * { if (isOfActiveType(event.getDamager())) { if (event.getCause() !=
+	 * EntityDamageEvent.DamageCause.PROJECTILE){ event.critical??? #TODO
+	 * Critical detection, limitation in bukkit } } }
+	 */
 }
