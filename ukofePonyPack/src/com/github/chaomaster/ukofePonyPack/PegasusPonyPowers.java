@@ -49,6 +49,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PegasusPonyPowers extends PonyPowers {
 	private double EXHAUSTION_PER_METER = 0.22D;
 	private double EXHAUSTION_PER_SECOND = 0.1D;
+	private float FLIGHT_SPEED = 0.5F/108;
 	private int FOOD_NEEDED_TO_FLY = 6;
 	private HashMap<Player, Location> lastFlightPos;
 	private BukkitRunnable flightTimerChecker;
@@ -71,6 +72,7 @@ public class PegasusPonyPowers extends PonyPowers {
 							p.setExhaustion((float) (p.getExhaustion()
 									+ l.distance(p.getLocation())
 									* PegasusPonyPowers.this.EXHAUSTION_PER_METER + PegasusPonyPowers.this.EXHAUSTION_PER_SECOND));
+									//TODO double check how long it's been since the last fly check 
 						}
 						entry.setValue(p.getLocation());
 					}
@@ -87,6 +89,8 @@ public class PegasusPonyPowers extends PonyPowers {
 					|| player.getGameMode() == GameMode.CREATIVE) {
 				player.setAllowFlight(false);
 			} else {
+				player.sendMessage(player.getFlySpeed()+"-"+player.getWalkSpeed());
+				player.setFlySpeed(FLIGHT_SPEED);
 				player.setAllowFlight(true);
 			}
 		}
@@ -112,6 +116,9 @@ public class PegasusPonyPowers extends PonyPowers {
 		}
 		if (config.isInt("FoodNeededToFly")) {
 			this.FOOD_NEEDED_TO_FLY = config.getInt("FoodNeededToFly");
+		}
+		if (config.isDouble("FlightSpeed")) {
+			this.FLIGHT_SPEED = (float) config.getDouble("FlightSpeed")/108;
 		}
 		return super.reloadConfig(config);
 	}

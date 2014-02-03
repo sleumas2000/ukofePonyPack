@@ -24,7 +24,9 @@ public enum PonyType {
 	EARTH("a Earth pony"),
 	ALICORN("an Alicorn"),
 	ZEBRA("a Zebra"),
-	CHANGELING("a Changeling");
+	CHANGELING("a Changeling"),
+        //BETA TYPES
+        BETAUNICORN("a Beta Tester Unicorn");
 
 	private String _message;
 
