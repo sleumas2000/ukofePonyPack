@@ -22,6 +22,7 @@ package com.github.chaomaster.ukofePonyPack;
 import java.io.File;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PotionSplashEvent;
@@ -43,7 +44,7 @@ public class ZebraPonyPowers extends PonyPowers {
 
 	@EventHandler
 	public void onPotionSplashEvent(PotionSplashEvent event) {
-		if (isOfActiveType(event.getPotion().getShooter())) {
+		if (isOfActiveType((Entity) event.getPotion().getShooter())) {
 			potionSplash(event);
 		}
 	}
