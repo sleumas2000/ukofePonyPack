@@ -73,10 +73,10 @@ public class ukofePonyPack extends JavaPlugin {
 			if (target == null) {
 				sendMessage(sender,
 						String.format("Player %s not found", target));
-				return true;
+				return false; // Failure should result in return of false
 			}
 			if (!selfOtherPermCheck(sender, target, cmd.getPermission())) {
-				return true;
+				return false; // Failure should result in return of false
 			}
 			if (cmd.getName().equalsIgnoreCase("recheck")) {
 				this.checker.triggerExpire((Player) target);
@@ -104,15 +104,15 @@ public class ukofePonyPack extends JavaPlugin {
 			} catch (IllegalArgumentException e) {
 				sendMessage(sender, String.format(
 						"%s is not an accepted pony type", target));
-				return true;
+				return false; // Failure should result in return of false
 			}
 			if (target == null) {
 				sendMessage(sender,
 						String.format("Player %s not found", target));
-				return true;
+				return false; // Failure should result in return of false
 			}
 			if (!selfOtherPermCheck(sender, target, cmd.getPermission())) {
-				return true;
+				return false; // Failure should result in return of false
 			}
 			this.checker.saveToPlayerConfig(target.getName(),
 					new PlayerConfigInfo(toType, duration, forever));
@@ -139,7 +139,7 @@ public class ukofePonyPack extends JavaPlugin {
 			if (sender != null && !sender.hasPermission(cmd.getPermission())) {
 				sendMessage(sender,
 						"You don't have permission to use this command");
-				return true;
+				return false; // Failure should result in return of false
 			}
 			sendMessage(sender, "Nullifying the player cache to force a reload");
 			this.checker.triggerCacheExpire();
@@ -151,7 +151,7 @@ public class ukofePonyPack extends JavaPlugin {
 			if (sender != null && !sender.hasPermission(cmd.getPermission())) {
 				sendMessage(sender,
 						"You don't have permission to use this command");
-				return true;
+				return false; // Failure should result in return of false
 			}
 			sendMessage(sender, "Saving the player cache");
 			this.checker.savePlayerConfig();
@@ -162,7 +162,7 @@ public class ukofePonyPack extends JavaPlugin {
 			if (sender != null && !sender.hasPermission(cmd.getPermission())) {
 				sendMessage(sender,
 						"You don't have permission to use this command");
-				return true;
+				return false; // Failure should result in return of false
 			}
 			if (args.length == 0) {
 				sendMessage(sender, "Reloading all power config files");
@@ -179,7 +179,7 @@ public class ukofePonyPack extends JavaPlugin {
 				} else {
 					sendMessage(sender,
 							String.format("Powers for %s not found", args[0]));
-					return true;
+					return false; // Failure should result in return of false
 				}
 			}
 		}
